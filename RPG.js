@@ -2,6 +2,7 @@ var Discordie = require("discordie");
 var Events = Discordie.Events;
  
 var client = new Discordie();
+var creation_start = [];
  
 client.connect({ token: "Mjc4MzkwMTc1ODAzODk5OTA0.C3roMw.Bx8YlafKr34xncXc-yYVPu6cAs0" });
  
@@ -11,10 +12,17 @@ client.Dispatcher.on(Events.GATEWAY_READY, e => {
  
 client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
   if (e.message.content == "!init") {
-	  var user = client.Users.find(u => u.username == e.message.author.username);
-	  if(!user)
+		var user = client.Users.find(u => u.id == e.message.author.id);
+		if (!user)
 			return;
+		for (var i = 0; i < creation_start.length; i++) {
+			if (creation_start[i].id == user.id) {
+				user.openDM().then(dm => dm.sendMessage("You have already begun character creation", true));//put this in the channel init is messaged in
+				return;
+			}
+		}
 	  user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
+	  creation_start.push(user);
   }
 });
 
