@@ -18,7 +18,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
   }
 });
 
-client.Dispatcher.on(Events.VOICE_CHANNEL_JOIN, e => {
+/*client.Dispatcher.on(Events.VOICE_CHANNEL_JOIN, e => {
 	var channelList = client.Channels.toArray();
 	for(var i = 0; i < channelList.length; i++){
 		if(channelList[i].name == "announcements")
@@ -27,14 +27,14 @@ client.Dispatcher.on(Events.VOICE_CHANNEL_JOIN, e => {
 	if(channel != null){
 		channel.sendMessage("User " + e.user.username + " has joined the " + e.channel.name + " channel", true);
 	}
-});
+});*/
 
 //client.Dispatcher.on(Events.VOICE_CHANNEL_JOIN, e => {
 	//if(e.channel.name == "Timeout Room")
 		
 //});
 
-client.Dispatcher.on(Events.PRESENCE_UPDATE, e => {
+/*client.Dispatcher.on(Events.PRESENCE_UPDATE, e => {
 	if(e.user.gameName != e.user.previousGameName && e.user.gameName != null){
 		var channelList = client.Channels.toArray();
 		for(var i = 0; i < channelList.length; i++){
@@ -58,4 +58,4 @@ client.Dispatcher.on(Events.PRESENCE_UPDATE, e => {
 			}
 		}
 	}
-});
+});*/
