@@ -19,6 +19,7 @@ class SpriteHandler(object):
         return sprite
     #TODO: getImg by sprite name table
     #TODO: getImg by sprite ID table
-handler = SpriteHandler('/home/onionchi/image.jpg',16,16,32,32)
-im = handler.getImg(0,0)
-im.show()
+#example use:
+#handler = SpriteHandler('/home/onionchi/image.jpg',16,16,32,32)
+#im = handler.getImg(0,0)
+#im.show()
