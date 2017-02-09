@@ -1,0 +1,14 @@
+{
+  "name": "DMBot",
+  "version": "1.0.0",
+  "description": "RPG client bot to handle DND games",
+  "main": "RPG.js",
+  "scripts": {
+    "RPG": "nodemon RPG.js"
+  },
+  "author": "Aniranth",
+  "license": "ISC",
+  "dependencies": {
+    "discordie": "^0.8.1"
+  }
+}
