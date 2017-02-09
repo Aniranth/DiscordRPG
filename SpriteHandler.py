@@ -12,3 +12,10 @@ class ImageHandler(object):
         self.s_per_row = self.i_xres//self.s_xres
         self.s_per_col = self.i_yres//self.s_yres
         self.f_name = filename
+        self.img = Image.open(filename)
+    def getImg(x,y):
+        s_area = (self.s_xres*x,self.s_yres*y,self.s_xres*(1+x),self.s_yres*(1+y))
+        sprite = self.img.crop(s_area)
+        return sprite
+    #TODO: getImg by sprite name table
+    #TODO: getImg by sprite ID table
