@@ -3,6 +3,7 @@ var Events = Discordie.Events;
  
 var client = new Discordie();
 var creation_start = [];
+var add_server = [];
  
 client.connect({ token: "Mjc4MzkwMTc1ODAzODk5OTA0.C3roMw.Bx8YlafKr34xncXc-yYVPu6cAs0" });
  
@@ -17,12 +18,16 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 			return;
 		for (var i = 0; i < creation_start.length; i++) {
 			if (creation_start[i].id == user.id) {
-				user.openDM().then(dm => dm.sendMessage("You have already begun character creation", true));//put this in the channel init is messaged in
+				e.message.channel.sendMessage(e.message.author.mention + " has already begun character creation. Check your direct messages to continue the process.");
 				return;
 			}
 		}
 	  user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
-	  creation_start.push(user);
+	  user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
+	  user.openDM().then(dm => dm.sendMessage("Select a class:\n\t1: Fighter\n\t2: Rogue\n\t3: Wizard\n\t4: Cleric\n\t5: Ranger\n\t6: Druid\nSelect a number to choose", true));
+	  var new_player = new Player(user.username, user.id);
+	  console.log("User: %s", new_player.username());
+	  creation_start.push(new_player);
   }
 });
 
