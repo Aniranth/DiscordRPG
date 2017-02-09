@@ -1,4 +1,6 @@
 var Discordie = require("discordie");
+var Dice = require('./DiscordIF/dice');
+var Player = require('./DiscordIF/player');
 var Events = Discordie.Events;
  
 var client = new Discordie();
