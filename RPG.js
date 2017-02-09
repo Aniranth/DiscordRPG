@@ -1,6 +1,6 @@
 var Discordie = require("discordie");
-var Dice = require('./DiscordIF/dice');
-var Player = require('./DiscordIF/player');
+var Dice = require('./DiscordIF/dice.js');
+var Player = require('./DiscordIF/player.js');
 var Events = Discordie.Events;
  
 var client = new Discordie();
@@ -27,8 +27,9 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 	  user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
 	  user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
 	  user.openDM().then(dm => dm.sendMessage("Select a class:\n\t1: Fighter\n\t2: Rogue\n\t3: Wizard\n\t4: Cleric\n\t5: Ranger\n\t6: Druid\nSelect a number to choose", true));
-	  var new_player = new Player(user.username, user.id);
-	  console.log("User: %s", new_player.username());
+	  console.log("User: %s", user.username);
+	  var new_player = new Player.constructor(user.username, user.id);
+	  console.log("User: %s", new_player.username);
 	  creation_start.push(new_player);
   }
 });
