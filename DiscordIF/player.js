@@ -22,7 +22,7 @@ class Player {
 	
 	get id()
 	{
-		return this.username;
+		return this.id;
 	}
 	
 	set str_stat(strength) 
@@ -54,7 +54,7 @@ class Player {
 	{
 		return this.wis_stat;
 	}
-
+	
 	set dex_stat(dexterity)
 	{
 		this.dex_stat = dexterity;

@@ -26,13 +26,29 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		}
 	  user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
 	  user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
-	  user.openDM().then(dm => dm.sendMessage("Select a class:\n\t1: Fighter\n\t2: Rogue\n\t3: Wizard\n\t4: Cleric\n\t5: Ranger\n\t6: Druid\nSelect a number to choose", true));
-	  console.log("User: %s", user.username);
+	  user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
+	  var player_stats = statsRoll();
+	  var stat_string = "";
+	  for(var i = 0; i < player_stats.length; i++) {
+		  stat_string += "\t" + player_stats[i] + "\n";
+	  }
+	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n", true));
 	  var new_player = new Player.constructor(user.username, user.id);
-	  console.log("User: %s", new_player.username);
+	  new_player.username = user.username;//kludge fix constructor later
+	  new_player.id = user.id;
 	  creation_start.push(new_player);
   }
 });
+
+function statsRoll() 
+{
+	var stats = [];
+	console.log("got here");
+	for (var i = 0; i < 6; i++) {
+		stats[i] = Dice.keepRoll(3, 4, 6);
+	}
+	return stats;
+}
 
 /*client.Dispatcher.on(Events.VOICE_CHANNEL_JOIN, e => {
 	var channelList = client.Channels.toArray();
