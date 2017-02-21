@@ -1,6 +1,6 @@
 var Discordie = require("discordie");
 const Dice = require("./DiscordIF/Dice");
-var Player = require('./DiscordIF/player.js');
+var Player = require("./DiscordIF/Player");
 var Events = Discordie.Events;
 
 var client = new Discordie();
@@ -33,7 +33,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		  stat_string += "\t" + player_stats[i] + "\n";
 	  }
 	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
-	  var new_player = new Player.constructor(user.username, user.id);
+	  var new_player = new Player.constructor(user.username, user.id);//TODO: Check this line to implement class Player
 	  new_player.username = user.username;//kludge fix constructor later
 	  new_player.id = user.id;
 	  creation_start.push(new_player);

@@ -105,3 +105,5 @@ class Player {
 		return this.race;
 	}
 }
+
+module.exports = Player;
