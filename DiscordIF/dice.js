@@ -11,14 +11,11 @@ class Dice {
 		for (let i = 0; i < num; i++) {
 			let roll = Math.floor((Math.random()* type) + 1);
 			keep.enq(roll);
-			if (i > num_keep) {
-				keep.deq();
-			}
 		}
 		let total_roll = 0;
-		keep.foreach(function (element) {
-			total_roll += element;
-		});
+		for (let i = 0; i < num_keep; i++) {
+			total_roll += keep.deq();
+		}
 		return total_roll;
 	}
 }
