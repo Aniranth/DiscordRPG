@@ -20,4 +20,4 @@ class Dice {
 	}
 }
 
-module.exports = Dice;	
+module.exports = Dice;
