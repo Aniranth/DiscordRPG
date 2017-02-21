@@ -1,18 +1,24 @@
 'use strict';
 
 class Dice {	
-	static roll(num, type)
+	static roll(num, type, num_keep)
 	{
-		let lowest = Number.MAX_VALUE;
-		let total_roll = 0;
+		let PriorityQueue = require('priorityqueuejs');
+		let keep = new PriorityQueue(function (a, b) {
+			return a-b;
+		});
+
 		for (let i = 0; i < num; i++) {
 			let roll = Math.floor((Math.random()* type) + 1);
-			total_roll += roll;
-			if (roll <= lowest) {
-				lowest = roll;
+			keep.enq(roll);
+			if (i > num_keep) {
+				keep.deq();
 			}
 		}
-		total_roll -= lowest;
+		let total_roll = 0;
+		keep.foreach(function (element) {
+			total_roll += element;
+		});
 		return total_roll;
 	}
 }

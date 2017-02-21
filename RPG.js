@@ -44,7 +44,7 @@ function statsRoll()
 {
 	var stats = [];
 	for (var i = 0; i < 6; i++) {
-		stats[i] = Dice.roll(4, 6);
+		stats[i] = Dice.roll(4, 6, 3);
 	}
 	return stats;
 }
