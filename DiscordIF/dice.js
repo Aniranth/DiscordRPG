@@ -1,14 +1,7 @@
 'use strict';
 
-class Dice 
-{
-	constructor(number, type) 
-	{
-		this.number = number;
-		this.type = type;
-	}
-	
-	static keepRoll(num_keep, num, type)
+class Dice {	
+	static roll(num, type)
 	{
 		let lowest = Number.MAX_VALUE;
 		let total_roll = 0;
@@ -23,3 +16,5 @@ class Dice
 		return total_roll;
 	}
 }
+
+module.exports = Dice;	

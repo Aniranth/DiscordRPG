@@ -1,8 +1,8 @@
 var Discordie = require("discordie");
-var Dice = require('./DiscordIF/dice.js');
+const Dice = require("./DiscordIF/Dice");
 var Player = require('./DiscordIF/player.js');
 var Events = Discordie.Events;
- 
+
 var client = new Discordie();
 var creation_start = [];
 var add_server = [];
@@ -32,7 +32,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 	  for(var i = 0; i < player_stats.length; i++) {
 		  stat_string += "\t" + player_stats[i] + "\n";
 	  }
-	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n", true));
+	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
 	  var new_player = new Player.constructor(user.username, user.id);
 	  new_player.username = user.username;//kludge fix constructor later
 	  new_player.id = user.id;
@@ -43,9 +43,8 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 function statsRoll() 
 {
 	var stats = [];
-	console.log("got here");
 	for (var i = 0; i < 6; i++) {
-		stats[i] = Dice.keepRoll(3, 4, 6);
+		stats[i] = Dice.roll(4, 6);
 	}
 	return stats;
 }
