@@ -49,7 +49,7 @@ function statsRoll()
 		mod += Math.floor(((stats[i] - 10)/2));
 	}
 	if (mod > 8 || mod < 4) {
-		return statusRoll();
+		return statsRoll();
 	} else {
 		return stats;
 	}
