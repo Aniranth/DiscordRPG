@@ -43,8 +43,14 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 function statsRoll() 
 {
 	var stats = [];
+	var mod = 0;
 	for (var i = 0; i < 6; i++) {
 		stats[i] = Dice.roll(4, 6, 3);
+		mod += Math.floor(((stats[i] - 10)/2));
 	}
-	return stats;
+	if (mod > 8 || mod < 4) {
+		return statusRoll();
+	} else {
+		return stats;
+	}
 }
