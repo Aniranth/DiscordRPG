@@ -1,6 +1,6 @@
 var Discordie = require("discordie");
-const Dice = require("./DiscordIF/Dice");
-var Player = require("./DiscordIF/Player");
+const Dice = require("./DiscordIF/dice.js");
+var Player = require("./DiscordIF/player.js");
 var Events = Discordie.Events;
 
 var client = new Discordie();
@@ -8,7 +8,7 @@ var creation_start = [];
 var add_server = [];
  
 client.connect({ token: "Mjc4MzkwMTc1ODAzODk5OTA0.C3roMw.Bx8YlafKr34xncXc-yYVPu6cAs0" });
- 
+
 client.Dispatcher.on(Events.GATEWAY_READY, e => {
   console.log("Connected as: " + client.User.username);
 });
