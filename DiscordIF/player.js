@@ -3,8 +3,9 @@
 class Player {
 	constructor(user_name, player_id)
 	{
-		this.username = user_name;
-		this.id = player_id;
+		console.log("Constructing a player object from DiscordIF\n");
+		this.username = username(user_name);
+		this.id = id(player_id);
 		this.race = "";
 		this.player_class = "";
 		this.str_stat = 0;
@@ -19,12 +20,22 @@ class Player {
 	{
 		return this.username;
 	}
+
+	set username(user)
+	{
+		this.username = user;	
+	}
 	
 	get id()
 	{
 		return this.id;
 	}
-	
+
+	set id(is)
+	{
+		this.id = id;	
+	}
+
 	set str_stat(strength) 
 	{
 		this.str_stat = strength;

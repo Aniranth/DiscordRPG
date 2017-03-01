@@ -33,9 +33,8 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		  stat_string += "\t" + player_stats[i] + "\n";
 	  }
 	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
-	  var new_player = new Player.constructor(user.username, user.id);//TODO: Check this line to implement class Player
-	  new_player.username = user.username;//kludge fix constructor later
-	  new_player.id = user.id;
+	  var new_player = new Player(user.username, user.id);//TODO: Fix class getter and setter functions. Learn js syntax
+	  console.log("User: " + new_player.username + "Id: " + new_player.id + "\n");
 	  creation_start.push(new_player);
   }
 });
