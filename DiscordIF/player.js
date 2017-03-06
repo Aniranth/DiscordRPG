@@ -1,120 +1,87 @@
 'use strict';
 
-class Player {
-	constructor(user_name, player_id)
-	{
-		console.log("Constructing a player object from DiscordIF\n");
-		this.username = username(user_name);
-		this.id = id(player_id);
-		this.race = "";
-		this.player_class = "";
-		this.str_stat = 0;
-		this.int_stat = 0;
-		this.wis_stat = 0;
-		this.dex_stat = 0;
-		this.con_stat = 0;
-		this.cha_stat = 0;
-	}
+function  Player(user_val, id_val) {
+	console.log("Using DiscordIF player class\n");
+	var username = user_val;
+	var user_id = id_val;
+	var str_stat = null;
+	var dex_stat = null;
+	var con_stat = null;
+	var int_stat = null;
+	var wis_stat = null;
+	var cha_stat = null; 
 	
-	get username()
-	{
-		return this.username;
-	}
+	Object.defineProperty(this, 'username', {
+		get: function() {
+			return username;
+		},
+		set: function(name_val) {
+			username = name_val;
+		}
+	});
+	
+	Object.defineProperty(this, 'user_id', {
+		get: function() {
+			return user_id;
+		},
+		set: function(id_val) {
+			user_id = id_val;
+		}
+	});
 
-	set username(user)
-	{
-		this.username = user;	
-	}
-	
-	get id()
-	{
-		return this.id;
-	}
+	Object.defineProperty(this, 'str_stat', {
+		get: function() {
+			return str_stat;
+		},
+		set: function(str_val) {
+			str_stat = str_val;
+		}
+	});
 
-	set id(is)
-	{
-		this.id = id;	
-	}
+	Object.defineProperty(this, 'dex_stat', {
+		get: function() {
+			return dex_stat;
+		},
+		set: function(dex_val) {
+			dex_stat = dex_val;
+		}
+	});
 
-	set str_stat(strength) 
-	{
-		this.str_stat = strength;
-	}
-	
-	get str_stat()
-	{
-		return this.str_stat;
-	}
+	Object.defineProperty(this, 'con_stat', {
+		get: function() {
+			return con_stat;
+		},
+		set: function(con_val) {
+			con_stat = con_val;
+		}
+	});
 
-	set int_stat(intelligence) 
-	{
-		this.int_stat = intelligence;
-	}
-	
-	get int_stat()
-	{
-		return this.int_stat;
-	}
+	Object.defineProperty(this, 'int_stat', {
+		get: function() {
+			return int_stat;
+		},
+		set: function(int_val) {
+			int_stat = int_val;
+		}
+	});
 
-	set wis_stat(wisdom)
-	{
-		this.wis_stat = wisdom;
-	}
-	
-	get wis_stat()
-	{
-		return this.wis_stat;
-	}
-	
-	set dex_stat(dexterity)
-	{
-		this.dex_stat = dexterity;
-	}
-	
-	get dex_stat() 
-	{
-		return this.dex_stat;
-	}
-	
-	set con_stat(constitution)
-	{
-		this.con_stat = constitution;
-	}
-	
-	get con_stat() 
-	{
-		return this.con_stat;
-	}	
-	
-	set cha_stat(charisma) 
-	{
-		this.cha_stat = charisma;
-	}
-	
-	get cha_stat()
-	{
-		return this.cha_stat;
-	}
-	
-	set player_class(user_class)
-	{
-		this.player_class = user_class;
-	}
-	
-	get player_class()
-	{
-		return this.player_class;
-	}
-	
-	set race(race)
-	{
-		this.race = race;
-	}
-	
-	get race()
-	{
-		return this.race;
-	}
+	Object.defineProperty(this, 'wis_stat', {
+		get: function() {
+			return wis_stat;
+		},
+		set: function(wis_val) {
+			wis_stat = wis_val;
+		}
+	});
+
+	Object.defineProperty(this, 'cha_stat', {
+		get: function() {
+			return cha_stat;
+		},
+		set: function(cha_val) {
+			cha_stat = cha_val;
+		}
+	});
 }
 
 module.exports = Player;

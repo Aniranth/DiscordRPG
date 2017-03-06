@@ -14,7 +14,7 @@ client.Dispatcher.on(Events.GATEWAY_READY, e => {
 });
  
 client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
-  if (e.message.content == "!init") {
+	if (e.message.content == "!init") {
 		var user = client.Users.find(u => u.id == e.message.author.id);
 		if (!user)
 			return;
@@ -24,19 +24,19 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 				return;
 			}
 		}
-	  user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
-	  user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
-	  user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
-	  var player_stats = statsRoll();
-	  var stat_string = "";
-	  for(var i = 0; i < player_stats.length; i++) {
-		  stat_string += "\t" + player_stats[i] + "\n";
-	  }
-	  user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
-	  var new_player = new Player(user.username, user.id);//TODO: Fix class getter and setter functions. Learn js syntax
-	  console.log("User: " + new_player.username + "Id: " + new_player.id + "\n");
-	  creation_start.push(new_player);
-  }
+		user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
+		user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
+		user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
+		var player_stats = statsRoll();
+		var stat_string = "";
+		for(var i = 0; i < player_stats.length; i++) {
+			stat_string += "\t" + player_stats[i] + "\n";
+		}
+		user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
+		var new_player = new Player(user.username, user.id);//TODO: Fix class getter and setter functions. Learn js syntax
+		console.log("User: " + new_player.username + " Id: " + new_player.id + "\n");
+		creation_start.push(new_player);
+  	}
 });
 
 function statsRoll() 
