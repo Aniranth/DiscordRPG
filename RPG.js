@@ -30,11 +30,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		var player_stats = statsRoll();
 		var new_player = new Player(user.username, user.id, player_stats, 0);//TODO: Fix class getter and setter functions. Learn js syntax
 		console.log("User: " + new_player.username + " Id: " + new_player.user_id + "\n");
-		var stat_string = "";
-		for(var i = 0; i < new_player.stat_array.length; i++) {
-			stat_string += "\t" + (i + 1) + ". " + new_player.stat_array[i] + "\n";
-		}
-		user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
+		user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + writeStats(new_player), true));
 		creation_start.push(new_player);
 		user.openDM().then(dm => dm.sendMessage("\nWhich of these stats would you like to assign to strength? (Direct message me the number preceding the stat)\n", true));
   	}
@@ -57,22 +53,59 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 				user.openDM().then(dm => dm.sendMessage("Please insert a valid stat number. You are still assigning the stat as I previously stated.", true));
 				return;
 			}
+			if(player.stat_array[e.message.content.charAt(0)-1] == "Already Assigned") {
+				user.openDM().then(dm => dm.sendMessage("You have already assigned the stat in this slot. Please select a valid stat", true));
+				return;
+			}
 			if(player){
 				switch(player.current_stat_assign) {
 					case 0: //Strength
 						player.str_stat = player.stat_array[e.message.content.charAt(0)-1];
 						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.str_stat + " to your strength stat.\nWhich of these stats would you like to assign to dexterity? (Direct message me the number preceding the stat)\n", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
 						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 1;
 						break;
 					case 1: //Dexterity
+						player.dex_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.dex_stat + " to your dexterity stat.\nWhich of these stats would you like to assign to constitution? (Direct message me the number preceding the stat)\n", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
+						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 2;
 						break;
 					case 2: //Constitution
+						player.con_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.con_stat + " to your constitution stat.\nWhich of these stats would you like to assign to intelligence? (Direct message me the number preceding the stat)\n", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
+						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 3;
 						break;
 					case 3: //Intelligence
+						player.int_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.int_stat + " to your intelligence stat.\nWhich of these stats would you like to assign to wisdom? (Direct message me the number preceding the stat)\n", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
+						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 4;
 						break;
 					case 4: //Wisdom
+						player.wis_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.wis_stat + " to your wisdom stat.\nWhich of these stats would you like to assign to charisma? (Direct message me the number preceding the stat)\n", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
+						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 5;
 						break;
 					case 5: //Charisma
+						player.cha_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.cha_stat + " to your charisma stat You have finished assigning your stats. I will now prompt you for class and race(except I am not done yet)", true));
+						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
+						//TODO: prevent stats from being assigned twice
+						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
+						player.current_stat_assign = 1;
 						break;
 					default:
 						user.openDM().then(dm => dm.sendMessage("\nOops something broke! I have removed you from the creation process. Please type \"!init\" again to reattempt.", true));
@@ -96,4 +129,13 @@ function statsRoll()
 	} else {
 		return stats;
 	}
+}
+
+function writeStats(player) 
+{
+	var stat_string = "";
+	for(var i = 0; i < player.stat_array.length; i++) {
+		stat_string += "\t" + (i + 1) + ". " + player.stat_array[i] + "\n";
+	}
+	return stat_string;
 }
