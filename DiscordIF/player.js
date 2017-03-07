@@ -1,6 +1,6 @@
 'use strict';
 
-function  Player(user_val, id_val) {
+function  Player(user_val, id_val, stat_arr_val, stat_assign_val) {
 	console.log("Using DiscordIF player class\n");
 	var username = user_val;
 	var user_id = id_val;
@@ -10,6 +10,8 @@ function  Player(user_val, id_val) {
 	var int_stat = null;
 	var wis_stat = null;
 	var cha_stat = null; 
+	var stat_array = stat_arr_val;
+	var current_stat_assign = stat_assign_val;
 	
 	Object.defineProperty(this, 'username', {
 		get: function() {
@@ -80,6 +82,24 @@ function  Player(user_val, id_val) {
 		},
 		set: function(cha_val) {
 			cha_stat = cha_val;
+		}
+	});
+	
+	Object.defineProperty(this, 'stat_array', {
+		get: function() {
+			return stat_array;
+		},
+		set: function(stat_array_val) {
+			stat_array = stat_array_val;
+		}
+	});
+	
+	Object.defineProperty(this, 'current_stat_assign', {
+		get: function() {
+			return current_stat_assign;
+		},
+		set: function(current_stat_assign_val) {
+			current_stat_assign = current_stat_assign_val;
 		}
 	});
 }
