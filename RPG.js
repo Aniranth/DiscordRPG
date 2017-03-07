@@ -28,7 +28,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
 		user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
 		var player_stats = statsRoll();
-		var new_player = new Player(user.username, user.id, player_stats, 420);//TODO: Fix class getter and setter functions. Learn js syntax
+		var new_player = new Player(user.username, user.id, player_stats, 0);//TODO: Fix class getter and setter functions. Learn js syntax
 		console.log("User: " + new_player.username + " Id: " + new_player.user_id + "\n");
 		var stat_string = "";
 		for(var i = 0; i < new_player.stat_array.length; i++) {
@@ -36,7 +36,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		}
 		user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + stat_string, true));
 		creation_start.push(new_player);
-		user.openDM().then(dm => dm.sendMessage("\nWhich of these stats would you like to assign to strength? (Direct message me the number preceding the stat or the stat itself)\n", true));
+		user.openDM().then(dm => dm.sendMessage("\nWhich of these stats would you like to assign to strength? (Direct message me the number preceding the stat)\n", true));
   	}
 });
 
@@ -45,33 +45,39 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 	var character_build;
 	var user = client.Users.find(u => u.id == e.message.author.id);
 	if(e.message.content != "!init" && e.message.author.username != "DMBot"){ //TODO: temp solution go off id
-		for(var i = 0; i < creation_start.length; i++) {
-			console.log(creation_start[i].username + " statthing: " + creation_start[i].current_stat_assign + "\n");
-		}
 		if (e.message.isPrivate) {
+			console.log(creation_start.length);
 			for (var i = 0; i < creation_start.length; i++) {
+				console.log("message id: " + user.id + " creation start: " + creation_start[i].user_id + " " +(user.id == creation_start[i].user_id));
 				if (user.id == creation_start[i].user_id) {
 					player = creation_start[i];
-				} else {
-					return;
 				}	
 			}
-			switch(player.current_stat_assign) {
-				case 0: //Strength
-					break;
-				case 1: //Dexterity
-					break;
-				case 2: //Constitution
-					break;
-				case 3: //Intelligence
-					break;
-				case 4: //Wisdom
-					break;
-				case 5: //Charisma
-					break;
-				default:
-					user.openDM().then(dm => dm.sendMessage("\nOops something broke! I have removed you from the creation process. Please type \"!init\" again to reattempt.", true));
-					return;
+			if(e.message.content.charAt(0) < '1' || e.message.content.charAt(0) > '6'){//TODO: error check message length
+				user.openDM().then(dm => dm.sendMessage("Please insert a valid stat number. You are still assigning the stat as I previously stated.", true));
+				return;
+			}
+			if(player){
+				switch(player.current_stat_assign) {
+					case 0: //Strength
+						player.str_stat = player.stat_array[e.message.content.charAt(0)-1];
+						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.str_stat + " to your strength stat.\nWhich of these stats would you like to assign to dexterity? (Direct message me the number preceding the stat)\n", true));
+						//TODO: prevent stats from being assigned twice
+						break;
+					case 1: //Dexterity
+						break;
+					case 2: //Constitution
+						break;
+					case 3: //Intelligence
+						break;
+					case 4: //Wisdom
+						break;
+					case 5: //Charisma
+						break;
+					default:
+						user.openDM().then(dm => dm.sendMessage("\nOops something broke! I have removed you from the creation process. Please type \"!init\" again to reattempt.", true));
+						return;
+				}
 			}
 		}
 	}

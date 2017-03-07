@@ -1,7 +1,6 @@
 'use strict';
 
 function  Player(user_val, id_val, stat_arr_val, stat_assign_val) {
-	console.log("Using DiscordIF player class\n");
 	var username = user_val;
 	var user_id = id_val;
 	var str_stat = null;
