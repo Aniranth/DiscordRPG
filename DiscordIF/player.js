@@ -1,6 +1,6 @@
 'use strict';
 
-function  Player(user_val, id_val, stat_arr_val, stat_assign_val) {
+function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_val) {
 	var username = user_val;
 	var user_id = id_val;
 	var str_stat = null;
@@ -11,6 +11,7 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val) {
 	var cha_stat = null; 
 	var stat_array = stat_arr_val;
 	var current_stat_assign = stat_assign_val;
+	var back_stat_array = back_assign_val;
 	
 	Object.defineProperty(this, 'username', {
 		get: function() {
@@ -99,6 +100,15 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val) {
 		},
 		set: function(current_stat_assign_val) {
 			current_stat_assign = current_stat_assign_val;
+		}
+	});
+
+	Object.defineProperty(this, 'back_stat_array', {
+		get: function() {
+			return back_stat_array;
+		},
+		set: function(back_stat_assign_val) {
+			back_stat_array = back_stat_assign_val;
 		}
 	});
 }

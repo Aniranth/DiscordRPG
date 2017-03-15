@@ -28,7 +28,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
 		user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
 		var player_stats = statsRoll();
-		var new_player = new Player(user.username, user.id, player_stats, 0);//TODO: Fix class getter and setter functions. Learn js syntax
+		var new_player = new Player(user.username, user.id, player_stats, 0, player_stats);
 		console.log("User: " + new_player.username + " Id: " + new_player.user_id + "\n");
 		user.openDM().then(dm => dm.sendMessage("Your stats are: \n" + writeStats(new_player), true));
 		creation_start.push(new_player);
@@ -40,7 +40,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 	var player = null;
 	var character_build;
 	var user = client.Users.find(u => u.id == e.message.author.id);
-	if(e.message.content != "!init" && e.message.author.username != "DMBot"){ //TODO: temp solution go off id
+	if(e.message.content != "!reassign" && e.message.content != "!confirm" && e.message.content != "!init" && e.message.author.username != "DMBot"){ //TODO: temp solution go off id
 		if (e.message.isPrivate) {
 			console.log(creation_start.length);
 			for (var i = 0; i < creation_start.length; i++) {
@@ -104,8 +104,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.cha_stat + " to your charisma stat You have finished assigning your stats. I will now prompt you for class and race(except I am not done yet)", true));
 						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
 						//TODO: prevent stats from being assigned twice
-						user.openDM().then(dm => dm.sendMessage("Your stats are:\n" + writeStats(player), true));
-						player.current_stat_assign = 1;
+						player.current_stat_assign = "assignment_complete";
 						break;
 					default:
 						user.openDM().then(dm => dm.sendMessage("\nOops something broke! I have removed you from the creation process. Please type \"!init\" again to reattempt.", true));
@@ -114,6 +113,29 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 			}
 		}
 	}
+});
+
+client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
+	if(e.message.content == "!reassign"){
+		var user = client.Users.find(u => u.id == e.message.author.id);
+		var player = null;
+		if(!user){
+			return;
+		}
+		for (var i = 0; i < creation_start.length; i++) {
+			if(creation_start[i].user_id == user.id) {
+				player = creation_start[i];
+			}
+		}
+		for(var i = 0; i < player.stat_array.length; i++) {
+			console.log(i + ": stat arr: " + player.stat_array[i] + " back arr: " + player.back_stat_array[i] + "\n");
+			player.stat_array[i] = player.back_stat_array[i]; //revert player
+		}
+		player.current_stat_assign = 0;
+		user.openDM().then(dm => dm.sendMessage("You have restarted stat assignment\nYour stats are: \n" + writeStats(player) + "\nWhich of these stats would you like to assign to strength? (Direct message me the number preceding the stat)\n", true));
+	} else if (e.message.content == "!confirm") {
+		console.log("Uploading to database");	
+	}	
 });
 
 function statsRoll() 
