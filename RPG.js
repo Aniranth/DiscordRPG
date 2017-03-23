@@ -56,7 +56,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 				user.openDM().then(dm => dm.sendMessage("Please insert a valid stat number. You are still assigning the stat as I previously stated.", true));
 				return;
 			}
-			if(player.stat_array[e.message.content.charAt(0)-1] == "Already Assigned") {
+			if(player.current_stat_assign != "class_assign" && player.current_stat_assign != "race_assign" && player.stat_array[e.message.content.charAt(0)-1] == "Already Assigned") {
 				user.openDM().then(dm => dm.sendMessage("You have already assigned the stat in this slot. Please select a valid stat", true));
 				return;
 			}
@@ -107,7 +107,20 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 						user.openDM().then(dm => dm.sendMessage("You have assigned: " + player.cha_stat + " to your charisma stat You have finished assigning your stats. I will now prompt you for class and race(except I am not done yet)", true));
 						player.stat_array[e.message.content.charAt(0)-1] = "Already Assigned";
 						//TODO: prevent stats from being assigned twice
-						player.current_stat_assign = "assignment_complete";
+						user.openDM().then(dm => dm.sendMessage("Select a class from the list below. (Direct message me the number preceding the class)\n\t1. Fighter", true));//TODO: Make this a part of the last DM to not flood user
+						player.current_stat_assign = "class_assign";
+						break;
+					case "class_assign":
+						var class_val = e.message.content.charAt(0);
+						switch (class_val) {
+							case "1": // Fighter
+								user.openDM().then(dm => dm.sendMessage("You have selected the fighter class.\nSelect a race from the following list. (Direct message me the number preceding the race)\n\t1. Human", true));
+								player.player_class = "fighter";
+								player.current_stat_assign = "race_assign";
+								break;
+							default:
+								console.log("You broke it again!");
+						}
 						break;
 					default:
 						user.openDM().then(dm => dm.sendMessage("\nOops something broke! I have removed you from the creation process. Please type \"!init\" again to reattempt.", true));

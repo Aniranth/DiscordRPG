@@ -9,6 +9,8 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_va
 	var int_stat = null;
 	var wis_stat = null;
 	var cha_stat = null; 
+	var player_class = null;
+	var player_race = null;
 	var stat_array = stat_arr_val;
 	var current_stat_assign = stat_assign_val;
 	var back_stat_array = back_assign_val;
@@ -82,6 +84,24 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_va
 		},
 		set: function(cha_val) {
 			cha_stat = cha_val;
+		}
+	});
+
+	Object.defineProperty(this, 'player_class', {
+		get: function() {
+			return player_class;
+		},
+		set: function(class_val) {
+			player_class = class_val;
+		}
+	});
+
+	Object.defineProperty(this, 'player_race', {
+		get: function() {
+			return player_race;
+		},
+		set: function(race_val) {
+			player_race = race_val;
 		}
 	});
 	
