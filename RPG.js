@@ -116,6 +116,10 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 							case "1": // Fighter
 								user.openDM().then(dm => dm.sendMessage("You have selected the fighter class.\nSelect a race from the following list. (Direct message me the number preceding the race)\n\t1. Human", true));
 								player.player_class = "fighter";
+								var guild = client.Guilds.find(g => g.name == "Delirium"); // How to assign roles
+								var role = guild.roles.find(r => r.name == "Fighter");
+								var member = user.memberOf(guild);
+								member.assignRole(role);
 								player.current_stat_assign = "race_assign";
 								break;
 							default:
