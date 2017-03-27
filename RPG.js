@@ -119,6 +119,14 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 								var guild = client.Guilds.find(g => g.name == "Delirium"); // How to assign roles
 								var role = guild.roles.find(r => r.name == "Fighter");
 								var member = user.memberOf(guild);
+								var member_nickname_string;
+								if(member.nick != null) {
+									member_nickname_string = member.nick + "  LVL. 1"; // string parse so that name cannot be set to "Aniranth LVL. 1 LVL. 2"
+								} else {
+									member_nickname_string = user.username + "  LVL. 1";
+								}
+								console.log("Debug: "  + member_nickname_string);
+								member.setNickname(member_nickname_string);
 								member.assignRole(role);
 								player.current_stat_assign = "race_assign";
 								break;
