@@ -24,7 +24,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 				return;
 			}
 		}
-		user.openDM().then(dm => dm.sendMessage("Welcome to character creation!", true));
+		user.openDM().then(dm => dm.sendMessage(":eggplant:Welcome to character creation!", true));
 		user.openDM().then(dm => dm.sendMessage("You have been added to a character creation process.", true));
 		user.openDM().then(dm => dm.sendMessage("Rolling attributes for your character...", true));
 		var player_stats = statsRoll();
