@@ -14,6 +14,7 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_va
 	var stat_array = stat_arr_val;
 	var current_stat_assign = stat_assign_val;
 	var back_stat_array = back_assign_val;
+	var stats_to_assign = ["str", "dex", "con", "int", "wis", "cha"];
 	
 	Object.defineProperty(this, 'username', {
 		get: function() {
@@ -129,6 +130,18 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_va
 		},
 		set: function(back_stat_assign_val) {
 			back_stat_array = back_stat_assign_val;
+		}
+	});
+	
+	Object.defineProperty(this, 'stats_to_assign', {
+		get: function() {
+			return stats_to_assign;
+		},
+		set: function(stats_to_assign_val) {
+			stats_to_assign = stats_to_assign_val;
+		},
+		reset_array: function(){
+			stats_to_assign = ["str", "dex", "con", "int", "wis", "cha"];
 		}
 	});
 }
