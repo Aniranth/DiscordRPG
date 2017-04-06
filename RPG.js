@@ -30,7 +30,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		var temp = new Array();
 		while (i--) temp[i] = player_stats[i];
 		var new_player = new Player(user.username, user.id, player_stats, "str_stat", temp);
-		new_player.message_to_player = (Promise.resolve(user.openDM().then(dm => dm.sendMessage("Welcome to character creation this is a test!", true)))).id;//TODO: update this
+		user.openDM().then(dm => dm.sendMessage("Welcome to character creation this is a test!", true)).then(e => new_player.message_to_player = e.id);//TODO: add failure resolution
 		console.log("Message ID: " + new_player.message_to_player);
 		//fetchMessages(1, new_player.message_to_player).then(e => );//TODO: This might be bad to do test this
 		console.log("User: " + new_player.username + " Id: " + new_player.user_id + "\n");
@@ -38,6 +38,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
   	}
 });
 
+//This is now obsolete
 client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 	var player = null;
 	var character_build;
