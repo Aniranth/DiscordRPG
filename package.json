@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "discordie": "^0.11.0",
-    "priorityqueuejs": "^1.0.0"
+    "priorityqueuejs": "^1.0.0",
+	"events": "^1.1.1"
   }
 }

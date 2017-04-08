@@ -14,7 +14,7 @@ function  Player(user_val, id_val, stat_arr_val, stat_assign_val, back_assign_va
 	var stat_array = stat_arr_val;
 	var current_stat_assign = stat_assign_val;
 	var back_stat_array = back_assign_val;
-	var message_to_player = "";
+	var message_to_player = null;
 	var stats_to_assign = ["str", "dex", "con", "int", "wis", "cha"];
 
 	

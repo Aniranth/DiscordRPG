@@ -1,9 +1,11 @@
-var Discordie = require("discordie");
+var Discordie = require("discordie");//change block stuff to consts
 const Dice = require("./DiscordIF/dice.js");
 var Player = require("./DiscordIF/player.js");
+var EventEmitter = require("events");
 var Events = Discordie.Events;
 
 var client = new Discordie();
+const emitter = new EventEmitter(); 
 var creation_start = [];
 var add_server = [];
  
@@ -30,12 +32,23 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 		var temp = new Array();
 		while (i--) temp[i] = player_stats[i];
 		var new_player = new Player(user.username, user.id, player_stats, "str_stat", temp);
-		user.openDM().then(dm => dm.sendMessage("Welcome to character creation this is a test!", true)).then(e => new_player.message_to_player = e.id);//TODO: add failure resolution
-		console.log("Message ID: " + new_player.message_to_player);
+		user.openDM().then(dm => dm.sendMessage("Welcome to character creation this is a test!", true)).then(e => {
+			new_player.message_to_player = e.id;
+			console.log("Message ID: " + new_player.message_to_player);
+			console.log("User: " + new_player.username + " Id: " + new_player.user_id);// note to self put code dependent to an async call in the then success
+			creation_start.push(new_player, user);
+			emitter.emit("UPDATE_MESSAGE", new_player);		
+		});//TODO: add failure resolution
 		//fetchMessages(1, new_player.message_to_player).then(e => );//TODO: This might be bad to do test this
-		console.log("User: " + new_player.username + " Id: " + new_player.user_id + "\n");
-		creation_start.push(new_player);
   	}
+});
+
+emitter.on("UPDATE_MESSAGE", (plyr) => {
+	var user = client.Users.find(u => u.id == plyr.user_id);
+	if (!user)
+		return;
+	console.log("got here");//TODO: figure out why it gets an old message
+	user.openDM().then(dm => (dm.fetchMessages(1, plyr.message_to_player))).then(e => {console.log(e.messages[0].content); e.messages[0].addReaction("\uD83D\uDE2C")});
 });
 
 //This is now obsolete
