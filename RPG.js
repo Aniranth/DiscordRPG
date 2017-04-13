@@ -49,6 +49,7 @@ emitter.on("UPDATE_MESSAGE", (plyr) => {
 		return;
 	console.log("got here");//TODO: figure out why it gets an old message
 	user.openDM().then(dm => (dm.fetchMessages(1, plyr.message_to_player))).then(e => {console.log(e.messages[0].content); e.messages[0].addReaction("\uD83D\uDE2C")});
+	user.openDM().then(dm => (dm.fetchMessages(100, plyr.message_to_player))).then(e => {console.log(e.messages[0].content); e.messages[0].addReaction("\uD83D\uDE2C")});
 });
 
 //This is now obsolete
